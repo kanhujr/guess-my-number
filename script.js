@@ -9,20 +9,31 @@ const guess = document.querySelector('.guess');
 const check = document.querySelector('.check');
 const message = document.querySelector('.message');
 const score = document.querySelector('.score');
+const again = document.querySelector('.again');
 
-const secretNum = Math.trunc(Math.random() * 20) + 1;
-number.textContent = secretNum;
+let secretNum = Math.trunc(Math.random() * 20) + 1;
 let scoreVal = 20;
 
 check.addEventListener('click', function () {
   const guessVal = Number(guess.value);
   console.log(guessVal);
 
+  // WHEN THE USER WILL GIVE NO INPUT
   if (!guessVal) {
     message.textContent = '❌ No Number';
-  } else if (guessVal === secretNum) {
+  }
+
+  // WHEN THE INPUT IS EQUAL TO THE SECRET NUMBER
+  else if (guessVal === secretNum) {
     message.textContent = '🌈 Correct Number';
-  } else if (guessVal > secretNum) {
+    number.textContent = secretNum;
+
+    document.querySelector('body').style.backgroundColor = '#60b347';
+    number.style.width = '30rem';
+  }
+
+  // WHEN THE INPUT IS HIGH
+  else if (guessVal > secretNum) {
     if (scoreVal > 1) {
       message.textContent = ' Too high';
       scoreVal--;
@@ -31,7 +42,11 @@ check.addEventListener('click', function () {
       message.textContent = '😣 You lose- Try again';
       score.textContent = 0;
     }
-  } else if (guessVal < secretNum) {
+    // guess.value = '';
+  }
+
+  // WHEN THE INPUT IS LOW
+  else if (guessVal < secretNum) {
     if (scoreVal > 1) {
       message.textContent = ' To low';
       scoreVal--;
@@ -40,6 +55,17 @@ check.addEventListener('click', function () {
       message.textContent = '😣 You lose- Try again';
       score.textContent = 0;
     }
+    // guess.value = '';
   }
+});
+
+again.addEventListener('click', function () {
+  scoreVal = 20;
+  secretNum = Math.trunc(Math.random() * 20) + 1;
+  message.textContent = 'Start guessing...';
+  score.textContent = scoreVal;
   guess.value = '';
+  number.textContent = '?';
+  document.querySelector('body').style.backgroundColor = '#222';
+  number.style.width = '15rem';
 });
