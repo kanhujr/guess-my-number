@@ -5,14 +5,16 @@
 // document.querySelector('.guess').value = 23;
 
 const number = document.querySelector('.number');
-const guess = document.querySelector('.guess');
+const guess = document.querySelector('#guess');
 const check = document.querySelector('.check');
 const message = document.querySelector('.message');
 const score = document.querySelector('.score');
 const again = document.querySelector('.again');
+const highscore = document.querySelector('.highscore');
 
 let secretNum = Math.trunc(Math.random() * 20) + 1;
 let scoreVal = 20;
+let highscoreVal = 0;
 
 check.addEventListener('click', function () {
   const guessVal = Number(guess.value);
@@ -30,33 +32,50 @@ check.addEventListener('click', function () {
 
     document.querySelector('body').style.backgroundColor = '#60b347';
     number.style.width = '30rem';
+
+    if (scoreVal > highscoreVal) {
+      highscoreVal = scoreVal;
+      highscore.textContent = highscoreVal;
+    }
+  }
+
+  // WHEN THE INPUT IS WRONG
+  else if (guessVal !== secretNum) {
+    if (scoreVal > 1) {
+      message.textContent = guessVal > secretNum ? ' Too high' : ' Too low';
+      scoreVal--;
+      score.textContent = scoreVal;
+    } else {
+      message.textContent = '😣 You lose- Try again';
+      score.textContent = 0;
+    }
   }
 
   // WHEN THE INPUT IS HIGH
-  else if (guessVal > secretNum) {
-    if (scoreVal > 1) {
-      message.textContent = ' Too high';
-      scoreVal--;
-      score.textContent = scoreVal;
-    } else {
-      message.textContent = '😣 You lose- Try again';
-      score.textContent = 0;
-    }
-    // guess.value = '';
-  }
+  // else if (guessVal > secretNum) {
+  //   if (scoreVal > 1) {
+  //     message.textContent = ' Too high';
+  //     scoreVal--;
+  //     score.textContent = scoreVal;
+  //   } else {
+  //     message.textContent = '😣 You lose- Try again';
+  //     score.textContent = 0;
+  //   }
+  // guess.value = '';
+  // }
 
   // WHEN THE INPUT IS LOW
-  else if (guessVal < secretNum) {
-    if (scoreVal > 1) {
-      message.textContent = ' To low';
-      scoreVal--;
-      score.textContent = scoreVal;
-    } else {
-      message.textContent = '😣 You lose- Try again';
-      score.textContent = 0;
-    }
-    // guess.value = '';
-  }
+  // else if (guessVal < secretNum) {
+  //   if (scoreVal > 1) {
+  //     message.textContent = ' To low';
+  //     scoreVal--;
+  //     score.textContent = scoreVal;
+  //   } else {
+  //     message.textContent = '😣 You lose- Try again';
+  //     score.textContent = 0;
+  //   }
+  // guess.value = '';
+  //   }
 });
 
 again.addEventListener('click', function () {
